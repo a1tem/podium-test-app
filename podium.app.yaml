@@ -1,0 +1,29 @@
+# The name of this app must be unique within this project.
+name: x7mcuj-example-app
+build: "8.1"
+
+# The webserver configuration for your application.
+web:
+  locations:
+    "/":
+      root: "/public"
+
+# The files or directories to preserve between builds (uploads, logs or config files).
+mounts:
+  - .env
+  - storage
+
+# Build, deployment and release hooks.
+hooks:
+  # Build hook is executed on the worker server.
+  deploy: |
+    composer install --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-dev
+
+    /usr/bin/php8.1 artisan migrate --force
+    /usr/bin/php8.1 artisan storage:link
+
+    /usr/bin/php8.1 artisan cache:clear
+    /usr/bin/php8.1 artisan event:cache
+
+  release: |
+    sudo service php8.1-fpm reload
