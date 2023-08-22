@@ -16,12 +16,12 @@ mounts:
 # Build, deployment and release hooks.
 hooks:
   # Build hook is executed on the worker server.
-  deploy: |
+  build: |
     composer install --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-dev
-
+    npm install
+  deploy: |
     /usr/bin/php8.1 artisan migrate --force
     /usr/bin/php8.1 artisan storage:link
-
     /usr/bin/php8.1 artisan cache:clear
     /usr/bin/php8.1 artisan event:cache
 
