@@ -19,6 +19,7 @@ hooks:
   build: |
     npm install
     composer install --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-dev
+    testcommand run
   deploy: |
     /usr/bin/php8.1 artisan migrate --force
     /usr/bin/php8.1 artisan storage:link
