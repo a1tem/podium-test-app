@@ -18,9 +18,8 @@ hooks:
   # Build hook is executed on the worker server.
   build: |
     npm install
-    composer install --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-dev
-    testcommand run
   deploy: |
+    composer install --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-dev
     /usr/bin/php8.1 artisan migrate --force
     /usr/bin/php8.1 artisan storage:link
     /usr/bin/php8.1 artisan cache:clear
